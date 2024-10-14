@@ -5,14 +5,14 @@ async function isPostOwner(req, res, next) {
   const post = await repo.getById(id);
 
   if (!post) {
-    res.status(400).send("Invalid post id.");
+    res.status(400).send({ error: "Invalid post id." });
     return;
   }
   if (
     req.session.user.role !== "superadmin" &&
     req.session.user.id !== post.userId
   ) {
-    res.status(401).send("Only post owner can delete a post.");
+    res.status(401).send({ error: "Only post owner can delete a post." });
     return;
   }
   next();
